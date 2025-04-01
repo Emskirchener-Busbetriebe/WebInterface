@@ -28,4 +28,4 @@ jobs:
             **/package.json
             **/.vscode*/**
             **/eslint.config.mjs
-            **/.lighthouserc.json
+            **/.LICENSE.md
