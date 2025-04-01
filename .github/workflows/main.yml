@@ -1,0 +1,31 @@
+on: push
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: Deploy to FTP Server
+    runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]'
+
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4.2.2
+
+      - name: FTP Deploy
+        id: ftp-deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.name }}.lima-ftp.de
+          username: ${{ secrets.name }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: ./default-website/DigiScouts/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.idea*/**
+            **/.github*/**
+            **/README.md
+            **/.gitignore
+            **/package.json
+            **/.vscode*/**
+            **/eslint.config.mjs
+            **/.lighthouserc.json
