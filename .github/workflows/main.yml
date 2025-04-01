@@ -17,7 +17,7 @@ jobs:
           server: ${{ secrets.name }}.lima-ftp.de
           username: ${{ secrets.name }}
           password: ${{ secrets.ftp_password }}
-          server-dir: ./default-website/DigiScouts/
+          server-dir: ./default-website/
           exclude: |
             **/.git*
             **/.git*/**
