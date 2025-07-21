@@ -149,6 +149,9 @@ $warns = $stmt->fetchAll();
             height: 24px;
             fill: white;
         }
+        .warn-username {
+            min-width: 140px;
+        }
         @media (max-width: 1200px) {
             .warn-user-panel {
                 grid-template-columns: 1fr;
