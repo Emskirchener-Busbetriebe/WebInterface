@@ -29,14 +29,12 @@ $warns = $stmt->fetchAll();
             font-family: Arial, sans-serif;
             overflow: hidden;
         }
-
         .navbar {
             height: 55px;
             width: 100%;
             background-color: #1b2028;
             color: white;
         }
-
         .sidepanel {
             position: absolute;
             top: 55px;
@@ -47,7 +45,6 @@ $warns = $stmt->fetchAll();
             color: rgb(255, 255, 255);
             padding: 10px;
         }
-
         .content {
             margin-left: 320px;
             padding: 35px;
@@ -55,24 +52,20 @@ $warns = $stmt->fetchAll();
             background-color: #212831;
             overflow-y: auto;
         }
-
         h1 {
             color: white;
             margin: 0;
         }
-
         .warn-dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-
         .header-buttons {
             display: flex;
             gap: 10px;
         }
-
         .content-header-button {
             background-color: #293039;
             color: white;
@@ -81,7 +74,6 @@ $warns = $stmt->fetchAll();
             border-radius: 20px;
             cursor: pointer;
         }
-
         .warn-user-content {
             background-color: #2a3039;
             border-radius: 8px;
@@ -93,7 +85,6 @@ $warns = $stmt->fetchAll();
             gap: 15px;
             position: relative;
         }
-
         .warn-user-panel {
             color: white;
             font-size: 1.1em;
@@ -103,13 +94,11 @@ $warns = $stmt->fetchAll();
             gap: 15px;
             flex-grow: 1;
         }
-
         .warn-subheading {
             color: #ffffff;
             font-size: 0.85em;
             font-weight: normal;
         }
-
         .warn-reason-content {
             max-height: 3.6em;
             overflow: hidden;
@@ -119,13 +108,11 @@ $warns = $stmt->fetchAll();
             text-overflow: ellipsis;
             transition: max-height 0.3s ease;
         }
-
         .warn-reason-content.expanded {
             max-height: none;
             -webkit-line-clamp: unset;
             display: block;
         }
-
         .read-more-btn {
             color: #4d9eff;
             cursor: pointer;
@@ -133,15 +120,12 @@ $warns = $stmt->fetchAll();
             margin-top: 5px;
             display: inline-block;
         }
-
         .read-more-btn:hover {
             text-decoration: underline;
         }
-
         .warn-dashboard {
             margin-bottom: 100px;
         }
-
         .remove {
             position: absolute;
             top: 0;
@@ -155,13 +139,11 @@ $warns = $stmt->fetchAll();
             align-items: center;
             justify-content: center;
         }
-
         .remove svg {
             width: 24px;
             height: 24px;
             fill: white;
         }
-
         @media (max-width: 1200px) {
             .warn-user-panel {
                 grid-template-columns: 1fr;
@@ -234,24 +216,23 @@ $warns = $stmt->fetchAll();
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.read-more-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const reasonContent = this.previousElementSibling;
-                    reasonContent.classList.toggle('expanded');
-                    this.textContent = reasonContent.classList.contains('expanded') 
-                        ? 'Read less' 
-                        : 'Read more';
-                });
-            });
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('read-more-btn')) {
+                const reasonContent = e.target.previousElementSibling;
+                reasonContent.classList.toggle('expanded');
+                e.target.textContent = reasonContent.classList.contains('expanded') 
+                    ? 'Read less' 
+                    : 'Read more';
+                e.preventDefault();
+            }
+        });
 
-            document.querySelectorAll('form.remove').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    if (!confirm('Möchten Sie diesen Warn wirklich löschen?')) {
-                        e.preventDefault();
-                    }
-                });
-            });
+        document.addEventListener('submit', function(e) {
+            if (e.target.classList.contains('remove')) {
+                if (!confirm('Möchten Sie diesen Warn wirklich löschen?')) {
+                    e.preventDefault();
+                }
+            }
         });
     </script>
 </body>
