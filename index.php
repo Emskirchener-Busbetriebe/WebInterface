@@ -138,6 +138,11 @@ $warns = $stmt->fetchAll();
             height: 24px;
             fill: white;
         }
+
+        .warn-reason {    
+            max-width: 260px;
+        }
+
         @media (max-width: 1200px) {
             .warn-user-panel {
                 grid-template-columns: 1fr;
