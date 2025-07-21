@@ -102,16 +102,10 @@ $warns = $stmt->fetchAll();
         .warn-reason-content {
             max-height: 3.6em;
             overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
-            transition: max-height 0.3s ease;
+            position: relative;
         }
         .warn-reason-content.expanded {
             max-height: none;
-            -webkit-line-clamp: unset;
-            display: block;
         }
         .read-more-btn {
             color: #4d9eff;
@@ -216,23 +210,26 @@ $warns = $stmt->fetchAll();
     </main>
 
     <script>
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('read-more-btn')) {
-                const reasonContent = e.target.previousElementSibling;
-                reasonContent.classList.toggle('expanded');
-                e.target.textContent = reasonContent.classList.contains('expanded') 
-                    ? 'Read less' 
-                    : 'Read more';
-                e.preventDefault();
-            }
-        });
-
-        document.addEventListener('submit', function(e) {
-            if (e.target.classList.contains('remove')) {
-                if (!confirm('Möchten Sie diesen Warn wirklich löschen?')) {
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.read-more-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
                     e.preventDefault();
-                }
-            }
+                    const container = this.closest('.warn-reason');
+                    const content = container.querySelector('.warn-reason-content');
+                    content.classList.toggle('expanded');
+                    this.textContent = content.classList.contains('expanded') 
+                        ? 'Read less' 
+                        : 'Read more';
+                });
+            });
+
+            document.querySelectorAll('form.remove').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    if (!confirm('Möchten Sie diesen Warn wirklich löschen?')) {
+                        e.preventDefault();
+                    }
+                });
+            });
         });
     </script>
 </body>
