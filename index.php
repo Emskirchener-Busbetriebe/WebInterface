@@ -198,7 +198,7 @@ $warns = $stmt->fetchAll();
                         <div class="warn-reason">
                             <span class="warn-subheading">Reason</span><br>
                             <div class="warn-reason-content">
-                                <?= nl2br(htmlspecialchars($warn['reason'])) ?>
+                                <?= nl2br(htmlspecialchars($warn['reason'], ENT_QUOTES)) ?>
                             </div>
                             <span class="read-more-btn">Read more</span>
                         </div>
