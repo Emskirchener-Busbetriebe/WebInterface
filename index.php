@@ -99,13 +99,24 @@ $warns = $stmt->fetchAll();
             font-size: 0.85em;
             font-weight: normal;
         }
+        .warn-reason {
+            max-width: 260px;
+        }
         .warn-reason-content {
+            max-width: 260px;
             max-height: 3.6em;
             overflow: hidden;
-            position: relative;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            transition: all 0.3s ease;
+            word-wrap: break-word;
         }
         .warn-reason-content.expanded {
             max-height: none;
+            -webkit-line-clamp: unset;
+            overflow: visible;
         }
         .read-more-btn {
             color: #4d9eff;
@@ -138,14 +149,15 @@ $warns = $stmt->fetchAll();
             height: 24px;
             fill: white;
         }
-
-        .warn-reason {    
-            max-width: 260px;
-        }
-
         @media (max-width: 1200px) {
             .warn-user-panel {
                 grid-template-columns: 1fr;
+            }
+            .warn-reason {
+                max-width: 100%;
+            }
+            .warn-reason-content {
+                max-width: 100%;
             }
         }
     </style>
@@ -182,7 +194,7 @@ $warns = $stmt->fetchAll();
                         <div class="warn-reason">
                             <span class="warn-subheading">Reason</span><br>
                             <div class="warn-reason-content">
-                                <?= nl2br(htmlspecialchars($warn['reason'], ENT_QUOTES)) ?>
+                                <?= nl2br(htmlspecialchars($warn['reason'])) ?>
                             </div>
                             <span class="read-more-btn">Read more</span>
                         </div>
@@ -219,12 +231,16 @@ $warns = $stmt->fetchAll();
             document.querySelectorAll('.read-more-btn').forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const container = this.closest('.warn-reason');
-                    const content = container.querySelector('.warn-reason-content');
-                    content.classList.toggle('expanded');
-                    this.textContent = content.classList.contains('expanded') 
-                        ? 'Read less' 
-                        : 'Read more';
+                    const content = this.previousElementSibling;
+                    const isExpanded = content.classList.toggle('expanded');
+                    
+                    if (isExpanded) {
+                        this.textContent = 'Read less';
+                        content.style.webkitLineClamp = 'unset';
+                    } else {
+                        this.textContent = 'Read more';
+                        content.style.webkitLineClamp = '2';
+                    }
                 });
             });
 
