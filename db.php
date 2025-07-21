@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db   = 'db_445815_2';
 $user = 'USER445815_bot';
-$pass = 'process.env.DB-PASSWORD';
+$pass = getenv('DB_PASSWORD') ?: '';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
